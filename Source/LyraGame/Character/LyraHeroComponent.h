@@ -6,6 +6,7 @@
 #include "Components/PawnComponent.h"
 #include "GameFeatures/GameFeatureAction_AddInputContextMapping.h"
 #include "GameplayAbilitySpecHandle.h"
+#include "Input/LyraInputComponent.h"
 #include "LyraHeroComponent.generated.h"
 
 #define UE_API LYRAGAME_API
@@ -69,16 +70,17 @@ protected:
 	UE_API virtual void BeginPlay() override;
 	UE_API virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-	UE_API virtual void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+	virtual void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+
+	/**
+	 * A method designed to be implemented by inheriting HeroComponents where specific native action handling happens
+	 * @param LyraIc 
+	 * @param InputConfig 
+	 */
+	UE_API virtual void BindNativeActions(ULyraInputComponent* LyraIc, const ULyraInputConfig* InputConfig);
 
 	UE_API void Input_AbilityInputTagPressed(FGameplayTag InputTag);
 	UE_API void Input_AbilityInputTagReleased(FGameplayTag InputTag);
-
-	UE_API void Input_Move(const FInputActionValue& InputActionValue);
-	UE_API void Input_LookMouse(const FInputActionValue& InputActionValue);
-	UE_API void Input_LookStick(const FInputActionValue& InputActionValue);
-	UE_API void Input_Crouch(const FInputActionValue& InputActionValue);
-	UE_API void Input_AutoRun(const FInputActionValue& InputActionValue);
 
 protected:
 	
