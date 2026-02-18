@@ -6,7 +6,6 @@
 #include "LyraLogChannels.h"
 #include "LyraCheatManager.h"
 #include "LyraPlayerState.h"
-#include "Camera/LyraPlayerCameraManager.h"
 #include "UI/LyraHUD.h"
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "EngineUtils.h"
@@ -45,8 +44,6 @@ namespace Lyra
 ALyraPlayerController::ALyraPlayerController(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	PlayerCameraManagerClass = ALyraPlayerCameraManager::StaticClass();
-
 #if USING_CHEAT_MANAGER
 	CheatClass = ULyraCheatManager::StaticClass();
 #endif // #if USING_CHEAT_MANAGER
@@ -381,11 +378,6 @@ void ALyraPlayerController::PostProcessInput(const float DeltaTime, const bool b
 	}
 
 	Super::PostProcessInput(DeltaTime, bGamePaused);
-}
-
-void ALyraPlayerController::OnCameraPenetratingTarget()
-{
-	bHideViewTargetPawnNextFrame = true;
 }
 
 void ALyraPlayerController::OnPossess(APawn* InPawn)

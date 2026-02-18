@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "Camera/LyraCameraAssistInterface.h"
 #include "CommonPlayerController.h"
 #include "Teams/LyraTeamAgentInterface.h"
 
@@ -30,7 +29,7 @@ struct FFrame;
  *	The base player controller class used by this project.
  */
 UCLASS(MinimalAPI, Config = Game, Meta = (ShortTooltip = "The base player controller class used by this project."))
-class ALyraPlayerController : public ACommonPlayerController, public ILyraCameraAssistInterface, public ILyraTeamAgentInterface
+class ALyraPlayerController : public ACommonPlayerController, public ILyraTeamAgentInterface
 {
 	GENERATED_BODY()
 
@@ -88,10 +87,6 @@ public:
 	UE_API virtual void PostProcessInput(const float DeltaTime, const bool bGamePaused) override;
 	//~End of APlayerController interface
 
-	//~ILyraCameraAssistInterface interface
-	UE_API virtual void OnCameraPenetratingTarget() override;
-	//~End of ILyraCameraAssistInterface interface
-	
 	//~ILyraTeamAgentInterface interface
 	UE_API virtual void SetGenericTeamId(const FGenericTeamId& NewTeamID) override;
 	UE_API virtual FGenericTeamId GetGenericTeamId() const override;

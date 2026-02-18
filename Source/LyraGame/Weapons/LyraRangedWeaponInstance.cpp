@@ -4,7 +4,6 @@
 #include "NativeGameplayTags.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Camera/LyraCameraComponent.h"
 #include "Physics/PhysicalMaterialWithTags.h"
 #include "Weapons/LyraWeaponInstance.h"
 
@@ -194,14 +193,6 @@ bool ULyraRangedWeaponInstance::UpdateMultipliers(float DeltaSeconds)
 
 	// Determine if we are aiming down sights, and apply the bonus based on how far into the camera transition we are
 	float AimingAlpha = 0.0f;
-	if (const ULyraCameraComponent* CameraComponent = ULyraCameraComponent::FindCameraComponent(Pawn))
-	{
-		float TopCameraWeight;
-		FGameplayTag TopCameraTag;
-		CameraComponent->GetBlendInfo(/*out*/ TopCameraWeight, /*out*/ TopCameraTag);
-
-		AimingAlpha = (TopCameraTag == TAG_Lyra_Weapon_SteadyAimingCamera) ? TopCameraWeight : 0.0f;
-	}
 	const float AimingMultiplier = FMath::GetMappedRangeValueClamped(
 		/*InputRange=*/ FVector2D(0.0f, 1.0f),
 		/*OutputRange=*/ FVector2D(1.0f, SpreadAngleMultiplier_Aiming),

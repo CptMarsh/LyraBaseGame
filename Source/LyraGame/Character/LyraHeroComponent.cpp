@@ -14,11 +14,9 @@
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Input/LyraInputConfig.h"
 #include "Input/LyraInputComponent.h"
-#include "Camera/LyraCameraComponent.h"
 #include "LyraGameplayTags.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "PlayerMappableInputConfig.h"
-#include "Camera/LyraCameraMode.h"
 #include "UserSettings/EnhancedInputUserSettings.h"
 #include "InputMappingContext.h"
 
@@ -40,7 +38,6 @@ const FName ULyraHeroComponent::NAME_ActorFeatureName("Hero");
 ULyraHeroComponent::ULyraHeroComponent(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	AbilityCameraMode = nullptr;
 	bReadyToBindInputs = false;
 }
 
@@ -169,15 +166,6 @@ void ULyraHeroComponent::HandleChangeInitState(UGameFrameworkComponentManager* M
 			if (Pawn->InputComponent != nullptr)
 			{
 				InitializePlayerInput(Pawn->InputComponent);
-			}
-		}
-
-		// Hook up the delegate for all pawns, in case we spectate later
-		if (PawnData)
-		{
-			if (ULyraCameraComponent* CameraComponent = ULyraCameraComponent::FindCameraComponent(Pawn))
-			{
-				CameraComponent->DetermineCameraModeDelegate.BindUObject(this, &ThisClass::DetermineCameraMode);
 			}
 		}
 	}
@@ -467,46 +455,3 @@ void ULyraHeroComponent::Input_AutoRun(const FInputActionValue& InputActionValue
 		}	
 	}
 }
-
-TSubclassOf<ULyraCameraMode> ULyraHeroComponent::DetermineCameraMode() const
-{
-	if (AbilityCameraMode)
-	{
-		return AbilityCameraMode;
-	}
-
-	const APawn* Pawn = GetPawn<APawn>();
-	if (!Pawn)
-	{
-		return nullptr;
-	}
-
-	if (ULyraPawnExtensionComponent* PawnExtComp = ULyraPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
-	{
-		if (const ULyraPawnData* PawnData = PawnExtComp->GetPawnData<ULyraPawnData>())
-		{
-			return PawnData->DefaultCameraMode;
-		}
-	}
-
-	return nullptr;
-}
-
-void ULyraHeroComponent::SetAbilityCameraMode(TSubclassOf<ULyraCameraMode> CameraMode, const FGameplayAbilitySpecHandle& OwningSpecHandle)
-{
-	if (CameraMode)
-	{
-		AbilityCameraMode = CameraMode;
-		AbilityCameraModeOwningSpecHandle = OwningSpecHandle;
-	}
-}
-
-void ULyraHeroComponent::ClearAbilityCameraMode(const FGameplayAbilitySpecHandle& OwningSpecHandle)
-{
-	if (AbilityCameraModeOwningSpecHandle == OwningSpecHandle)
-	{
-		AbilityCameraMode = nullptr;
-		AbilityCameraModeOwningSpecHandle = FGameplayAbilitySpecHandle();
-	}
-}
-

@@ -21,7 +21,6 @@ class IRepChangedPropertyTracker;
 class UAbilitySystemComponent;
 class UInputComponent;
 class ULyraAbilitySystemComponent;
-class ULyraCameraComponent;
 class ULyraHealthComponent;
 class ULyraPawnExtensionComponent;
 class UObject;
@@ -196,9 +195,6 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<ULyraHealthComponent> HealthComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Lyra|Character", Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<ULyraCameraComponent> CameraComponent;
 
 	UPROPERTY(Transient, ReplicatedUsing = OnRep_ReplicatedAcceleration)
 	FLyraReplicatedAcceleration ReplicatedAcceleration;

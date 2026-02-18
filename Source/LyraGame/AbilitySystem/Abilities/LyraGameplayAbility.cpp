@@ -17,7 +17,6 @@
 #include "AbilitySystem/LyraGameplayEffectContext.h"
 #include "Physics/PhysicalMaterialWithTags.h"
 #include "GameFramework/PlayerState.h"
-#include "Camera/LyraCameraMode.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(LyraGameplayAbility)
 
@@ -45,8 +44,6 @@ ULyraGameplayAbility::ULyraGameplayAbility(const FObjectInitializer& ObjectIniti
 	ActivationGroup = ELyraAbilityActivationGroup::Independent;
 
 	bLogCancelation = false;
-
-	ActiveCameraMode = nullptr;
 }
 
 ULyraAbilitySystemComponent* ULyraGameplayAbility::GetLyraAbilitySystemComponentFromActorInfo() const
@@ -194,8 +191,6 @@ void ULyraGameplayAbility::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 void ULyraGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled)
 {
-	ClearCameraMode();
-
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
@@ -515,31 +510,5 @@ bool ULyraGameplayAbility::ChangeActivationGroup(ELyraAbilityActivationGroup New
 	}
 
 	return true;
-}
-
-void ULyraGameplayAbility::SetCameraMode(TSubclassOf<ULyraCameraMode> CameraMode)
-{
-	ENSURE_ABILITY_IS_INSTANTIATED_OR_RETURN(SetCameraMode, );
-
-	if (ULyraHeroComponent* HeroComponent = GetHeroComponentFromActorInfo())
-	{
-		HeroComponent->SetAbilityCameraMode(CameraMode, CurrentSpecHandle);
-		ActiveCameraMode = CameraMode;
-	}
-}
-
-void ULyraGameplayAbility::ClearCameraMode()
-{
-	ENSURE_ABILITY_IS_INSTANTIATED_OR_RETURN(ClearCameraMode, );
-
-	if (ActiveCameraMode)
-	{
-		if (ULyraHeroComponent* HeroComponent = GetHeroComponentFromActorInfo())
-		{
-			HeroComponent->ClearAbilityCameraMode(CurrentSpecHandle);
-		}
-
-		ActiveCameraMode = nullptr;
-	}
 }
 

@@ -11,7 +11,6 @@
 class APawn;
 class ULyraAbilitySet;
 class ULyraAbilityTagRelationshipMapping;
-class ULyraCameraMode;
 class ULyraInputConfig;
 class UObject;
 
@@ -47,10 +46,6 @@ public:
 	// Input configuration used by player controlled pawns to create input mappings and bind input actions.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Input")
 	TObjectPtr<ULyraInputConfig> InputConfig;
-
-	// Default camera mode used by player controlled pawns.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Camera")
-	TSubclassOf<ULyraCameraMode> DefaultCameraMode;
 };
 
 #undef UE_API

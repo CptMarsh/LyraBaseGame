@@ -3,7 +3,6 @@
 #include "LyraCharacter.h"
 
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
-#include "Camera/LyraCameraComponent.h"
 #include "Character/LyraHealthComponent.h"
 #include "Character/LyraPawnExtensionComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -68,9 +67,6 @@ ALyraCharacter::ALyraCharacter(const FObjectInitializer& ObjectInitializer)
 	HealthComponent = CreateDefaultSubobject<ULyraHealthComponent>(TEXT("HealthComponent"));
 	HealthComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	HealthComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
-
-	CameraComponent = CreateDefaultSubobject<ULyraCameraComponent>(TEXT("CameraComponent"));
-	CameraComponent->SetRelativeLocation(FVector(-300.0f, 0.0f, 75.0f));
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = true;

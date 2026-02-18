@@ -16,7 +16,6 @@ struct FMappableConfigPair;
 
 class UGameFrameworkComponentManager;
 class UInputComponent;
-class ULyraCameraMode;
 class ULyraInputConfig;
 class UObject;
 struct FActorInitStateChangedParams;
@@ -40,12 +39,6 @@ public:
 	/** Returns the hero component if one exists on the specified actor. */
 	UFUNCTION(BlueprintPure, Category = "Lyra|Hero")
 	static ULyraHeroComponent* FindHeroComponent(const AActor* Actor) { return (Actor ? Actor->FindComponentByClass<ULyraHeroComponent>() : nullptr); }
-
-	/** Overrides the camera from an active gameplay ability */
-	UE_API void SetAbilityCameraMode(TSubclassOf<ULyraCameraMode> CameraMode, const FGameplayAbilitySpecHandle& OwningSpecHandle);
-
-	/** Clears the camera override if it is set */
-	UE_API void ClearAbilityCameraMode(const FGameplayAbilitySpecHandle& OwningSpecHandle);
 
 	/** Adds mode-specific input config */
 	UE_API void AddAdditionalInputConfig(const ULyraInputConfig* InputConfig);
@@ -87,19 +80,10 @@ protected:
 	UE_API void Input_Crouch(const FInputActionValue& InputActionValue);
 	UE_API void Input_AutoRun(const FInputActionValue& InputActionValue);
 
-	UE_API TSubclassOf<ULyraCameraMode> DetermineCameraMode() const;
-
 protected:
 	
 	UPROPERTY(EditAnywhere)
 	TArray<FInputMappingContextAndPriority> DefaultInputMappings;
-	
-	/** Camera mode set by an ability. */
-	UPROPERTY()
-	TSubclassOf<ULyraCameraMode> AbilityCameraMode;
-
-	/** Spec handle for the last ability to set a camera mode. */
-	FGameplayAbilitySpecHandle AbilityCameraModeOwningSpecHandle;
 
 	/** True when player input bindings have been applied, will never be true for non - players */
 	bool bReadyToBindInputs;

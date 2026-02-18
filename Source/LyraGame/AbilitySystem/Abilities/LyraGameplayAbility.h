@@ -22,7 +22,6 @@ class ILyraAbilitySourceInterface;
 class UAnimMontage;
 class ULyraAbilityCost;
 class ULyraAbilitySystemComponent;
-class ULyraCameraMode;
 class ULyraHeroComponent;
 class UObject;
 struct FFrame;
@@ -135,14 +134,6 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure = false, Category = "Lyra|Ability", Meta = (ExpandBoolAsExecs = "ReturnValue"))
 	UE_API bool ChangeActivationGroup(ELyraAbilityActivationGroup NewGroup);
 
-	// Sets the ability's camera mode.
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Ability")
-	UE_API void SetCameraMode(TSubclassOf<ULyraCameraMode> CameraMode);
-
-	// Clears the ability's camera mode.  Automatically called if needed when the ability ends.
-	UFUNCTION(BlueprintCallable, Category = "Lyra|Ability")
-	UE_API void ClearCameraMode();
-
 	void OnAbilityFailedToActivate(const FGameplayTagContainer& FailedReason) const
 	{
 		NativeOnAbilityFailedToActivate(FailedReason);
@@ -213,9 +204,6 @@ protected:
 	// If true, extra information should be logged when this ability is canceled. This is temporary, used for tracking a bug.
 	UPROPERTY(EditDefaultsOnly, Category = "Advanced")
 	bool bLogCancelation;
-
-	// Current camera mode set by the ability.
-	TSubclassOf<ULyraCameraMode> ActiveCameraMode;
 };
 
 #undef UE_API
