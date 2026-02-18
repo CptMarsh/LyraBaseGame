@@ -285,15 +285,15 @@
 		},
 		{
 			"Name": "ShooterCore",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "ShooterMaps",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "TopDownArena",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "FunctionalTestingEditor",
@@ -301,11 +301,11 @@
 		},
 		{
 			"Name": "ShooterExplorer",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "ShooterTests",
-			"Enabled": true
+			"Enabled": false
 		},
 		{
 			"Name": "GameplayInteractions",
