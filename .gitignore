@@ -1,0 +1,10 @@
+﻿.idea
+.vs
+*.sln
+*.csproj.props
+
+obj/
+
+Binaries/
+Intermediate/
+Saved/
