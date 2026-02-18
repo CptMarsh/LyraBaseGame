@@ -6,5 +6,6 @@
 obj/
 
 Binaries/
+DerivedDataCache/
 Intermediate/
 Saved/
