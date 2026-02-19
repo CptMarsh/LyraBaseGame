@@ -261,7 +261,7 @@ void ULyraAssetManager::PreBeginPIE(bool bStartSimulate)
 		const bool bAllowInPIE = true;
 		SlowTask.MakeDialog(bShowCancelButton, bAllowInPIE);
 
-		const ULyraGameData& LocalGameDataCommon = GetGameData();
+		// const ULyraGameData& LocalGameDataCommon = GetGameData();
 
 		// Intentionally after GetGameData to avoid counting GameData time in this timer
 		SCOPE_LOG_TIME_IN_SECONDS(TEXT("PreBeginPIE asset preloading complete"), nullptr);
